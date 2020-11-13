@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>练习一个vue的双向绑定</title>
+    <script src="./index.js"></script>
+</head>
+<body>
+    <div id="app">
+        <h2>冯森的github</h2>
+        <div><a href="https://github.com/499800157/kkbweb-">前往</a></div>
+        <h3>练习vue的双向绑定</h3>
+        <hr>
+        <span>文本里的：</span>{{message}}
+        <div>
+            <span>div里的：</span>
+            {{message}}
+        </div>
+        <input type="text" v-model = "message">
+        <div v-html = "message"></div>
+        <div v-text = "message"></div>
+    </div>
+</body>
+<script>
+    let mv = new Vue({
+        el:"#app",
+        data:{
+            message:"我的数据"
+        }
+    })
+    
+    setTimeout(()=>{
+        mv.$data.message = "修改的数据"
+        console.log(mv)
+    },1000)
+</script>
+</html>
