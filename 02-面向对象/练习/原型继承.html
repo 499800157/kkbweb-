@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        function Dad(name,age){
+            this.name = name
+            this.age = age
+        }
+        Dad.prototype.fn = function(){
+            console.log("dad fn")
+        }
+
+        function Son(name,age){
+            Dad.call(this,name,age)
+
+        }
+        Son.prototype.getFn = function(){
+            console.log("son fn")
+        }
+
+        let xiaoming = new Son("小明",20)
+        console.log(xiaoming)
+        // Uncaught TypeError: xiaoming.fn is not a function
+        xiaoming.fn()
+        /* 
+            xiaoming这个实例对象，可以调用其构造函数以及构造函数的显示原型上的属性和方法（换句话说，它的构造函数以及构造函数的显示原型的this都指向xiaoming这个实例对象）
+
+            Son这个构造函数使用call将Dad这个构造函数的this指向自己，但是没能改变Dad的的显示原型的this指向
+
+            如果通过 Son.prototype = Dad.prototype 来实现this指向的改变，会有问题（两个对象的值指向同一个地址），修改Son.prototype上的属性和方法 Dad实例化后的对象也会调用Son上的属性和方法（影响了父类）
+
+        */
+
+        
+        // 
+
+
+
+
+    </script>
+</body>
+</html>

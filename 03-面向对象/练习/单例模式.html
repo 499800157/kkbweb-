@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script >
+        // 方式1
+        // let  instance = null
+        // class Person{
+        //     constructor(name){
+        //         if(!instance){
+        //             instance = this
+        //         }
+        //         this.name= name
+        //         console.log(this)
+        //         // 必须return instance这个值，return this是新的实例
+        //         return instance
+        //     }
+        // }
+
+        // let zhangsan = new Person("张三")
+        // let lisi = new Person("李四")
+        // console.log(zhangsan,lisi);
+        // console.log(zhangsan===lisi);        
+
+        // 方式2
+        // class Person{
+        //     // 静态属性只能被类自己调用
+        //     static instance = null
+        //     constructor(name){
+        //         if(!Person.instance){
+        //             Person.instance = this
+        //             this.name= name
+        //         }
+        //         // 必须return instance这个值，return this是新的实例
+        //         // this指向实例
+        //         return Person.instance
+        //     }
+        // }
+
+        // let zhangsan = new Person("张三");
+        // let lisi = new Person("李四")
+        // console.log(zhangsan,lisi);
+        // console.log(zhangsan===lisi);
+
+
+        // 方式3
+        // 如果有多个类要被实例化
+        class Person{
+            constructor(name){
+                this.name = name
+            }
+        }
+
+        class Animal{
+            constructor(name){
+                this.name = name
+            }
+        }
+
+        function getSingle(fn){
+            let instance = null
+            return function(...rest){
+                if(!instance){
+                    instance = new fn(...rest)
+                }
+                return instance
+            }
+        }
+
+        let singlePerson = getSingle(Person)
+        let zhangsan = new singlePerson("张三")
+        let lisi = new singlePerson("李四")
+        console.log(zhangsan,lisi);
+        console.log(zhangsan===lisi);
+
+        let singleAnimal = getSingle(Animal)
+        let dahuang = singleAnimal("大黄")
+        let xiaohong = singleAnimal("小红")
+        console.log(dahuang,xiaohong);
+        console.log(dahuang===xiaohong);
+
+
+    </script>
+</body>
+</html>

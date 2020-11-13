@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // 单例模式
+    // class Person{
+    //     constructor(name){
+    //         this.name = name;
+    //     }
+    // }
+    // // 有一个实例；window、document
+    // let zhangsan = new Person("张三");
+    // let lisi  = new Person("李四");
+    // console.log(zhangsan===lisi);
+    // 保证只有一个实例？ 记录是否被实例化；
+    // 方式一
+    // let instance;
+    // class Person{
+    //     constructor(name){
+    //         if(!instance){
+    //             instance  = this;
+    //         }
+    //         this.name = name;
+    //         return instance;
+    //     }
+    // }
+    // let zhangsan = new Person("张三");
+    // let lisi  = new Person("李四");
+    // let wangwu  = new Person("王五");
+    // console.log(zhangsan===lisi);
+    // 方式二
+    // class Person{
+    //     static instance;
+    //     constructor(name){
+    //         if(!Person.instance){
+    //             Person.instance  = this;
+    //         }
+    //         this.name = name;
+    //         return Person.instance;
+    //     }
+    // }
+    // let zhangsan = new Person("张三");
+    // let lisi  = new Person("李四");
+    // let wangwu  = new Person("王五");
+    // console.log(zhangsan,lisi);
+
+    // 方式三；
+
+    class Person {
+        constructor(name) {
+            this.name = name;
+        }
+    }
+
+    class Animal {
+        constructor(name) {
+            this.name = name;
+        }
+    }
+    // 缓存特性；高阶函数的特性
+    // 高阶函数：有函数输入或者有函数作为返还的函数被称为高阶函数；（函数既是函数又是数据（对象））一等公民；
+    function getSingle(fn){
+        let instance;
+        return function(...args){
+            if(!instance){
+                instance = new fn(...args);
+            }
+            return instance;
+        }
+    }
+
+    let singlePerson = getSingle(Person);
+    let zhangsan = new singlePerson("张三");
+    let lisi = new singlePerson("李四");
+    console.log(zhangsan===lisi);
+
+    let singleAnimal = getSingle(Animal);
+    let dahuang = new singleAnimal("大黄");
+    let xiaoqiang = new singleAnimal("小强");
+    console.log(dahuang===xiaoqiang);
+    
+
+    // function test(cb){
+    //     cb && cb();
+    // }
+    // test(function(){
+
+    // })
+
+</script>
+
+</html>

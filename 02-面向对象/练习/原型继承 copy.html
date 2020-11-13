@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        function Dad(name,age){
+            this.name = name
+            this.age = age
+        }
+        Dad.prototype.fn = function(){
+            console.log("dad fn")
+        }
+
+        function Son(name,age){
+            Dad.call(this,name,age)
+
+        }
+        
+        // 原型继承1
+        let F = function(){}
+        F.prototype = Dad.prototype
+        Son.prototype = new Dad()
+        Son.prototype.constructor = Son
+        
+        // 原型继承2
+        // Son.prototype = new Dad
+        // Son.prototype.constructor = Son
+
+        // 3
+        // Son.prototype.__proto__ = Dad.prototype
+        // Son.prototype.constructor = Son
+
+        // Son.prototype.fn = function(){
+        //     console.log("son fn")
+        // }
+
+        let xiaoming = new Son("小明",20)
+        console.log(xiaoming)
+        xiaoming.__proto__ = {}
+        xiaoming.fn()
+        console.log(Son.prototype.constructor)
+       
+        let dady = new Dad("dady",40)
+        console.log(dady)
+        dady.fn()
+
+        // Son.prototype.__proto__ = Dad.prototype
+
+    </script>
+</body>
+</html>

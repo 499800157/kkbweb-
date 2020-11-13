@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <message-box></message-box> -->
+    <!-- <message-boxele></message-boxele> -->
+    <button class="btn1">点击</button>
+
+</body>
+<script type="module">
+import MessageBox from './messagebox.js';
+// 1.如何调用？？ 开闭原则
+// $  、 new Vue(config)、axios 、axios(config)、axios.get  put delete head...
+// 2.配置（需求）合并配置；
+let messagebox = new MessageBox({
+    title: "外部传入",
+    width:"40%",
+    content:"内容外部",
+    success:function(val){
+        console.log("点击了确定",val);
+        
+    }
+})
+
+document.querySelector(".btn1").onclick = function(){
+    messagebox.open();
+}
+
+// 3.封装组件(针对html、css、js);
+// 4.数据动态呈现；
+// 5.事件处理；
+
+
+
+
+
+
+</script>
+</html>

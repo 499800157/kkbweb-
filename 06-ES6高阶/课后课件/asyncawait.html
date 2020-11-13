@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    let p1 = function () {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve("1111");
+            }, 2000)
+        })
+    }
+    let p2 = function () {
+        return new Promise((resolve, reject) => {
+
+            setTimeout(() => {
+                resolve("222");
+                // reject("err")
+            }, 1000)
+        })
+    }
+    let p3 = function () {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve("333");
+            }, 3000)
+        })
+    }
+
+    // p1().then(res=>{
+    //     console.log(res)
+    //     return p2();
+    // }).then(res=>{
+    //     console.log(res);
+    //     return p3();
+    // }).then(res=>{
+    //     console.log(res);
+    // })
+    // 把异步过程 变成同步写法；
+    // async function asyncFn() {
+    //     try {
+    //         let res1 = await p1();
+    //         console.log(res1);
+    //         let res2 = await p2();
+    //         console.log(res2);
+    //         let res3 = await p3();
+    //         console.log(res3);
+    //         console.log("所有异步执行完成");
+    //     } catch (e) {
+    //         console.log(e);
+    //     }
+    // }
+    // asyncFn();
+
+    // 只会等待一个async函数里的await  不是多个；
+    // let arr = [p1,p2,p3];
+    async function fn() {
+        // arr.forEach((item) => {
+        //     let res = await item();
+        //     console.log(res);
+        // })
+        for(let i=0;i<arr.length;i++){
+            let res = await arr[i]();
+            console.log(res);
+        }
+        // return 111;
+    }
+//    console.log( fn());
+
+
+
+
+
+</script>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    function loadImg() {
+        return new Promise((resolve, reject) => {
+            let img = new Image();
+            img.src = "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604767303668&di=ddad2ec8cfd607e787c6223e8ca7bc35&imgtype=0&src=http%3A%2F%2Fa0.att.hudong.com%2F18%2F56%2F14300000958002128488569856508.jpg";
+            // img.src = "https://timgsa.baidu.com"
+            img.onload = function () {
+                console.log("加载完成");
+                resolve(img);
+            }
+            img.onerror = function () {
+                // console.log("加载失败");
+                reject("加载失败");
+            }
+        })
+    }
+    let p = loadImg()
+    console.log(p)
+    p.then(img=>{
+        console.log(p)
+        document.body.appendChild(img);
+    }).catch(err=>{
+        console.log(err);
+    })
+
+
+
+
+</script>
+
+</html>

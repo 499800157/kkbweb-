@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+        #box{
+            width: 800px;
+            margin: 0 auto;
+            border: 3px solid goldenrod;
+            min-height: 260px;
+            padding-bottom: 60px;
+        }
+        #operate{
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content:space-between;
+            border-bottom:1px solid darksalmon ;
+        }
+        #operate>li{
+            background: blanchedalmond;
+            padding: 30px;
+            cursor: pointer;
+        }
+        #info h2{
+            text-align: center;
+            padding: 16px 0;
+        }
+        #info{
+            line-height: 20px;
+            font-size: 18px;
+        }
+        #showInfo>li{
+            margin: 10px 8px;
+        }
+    </style>
+</head>
+<body>
+    <div  id = "box">
+        <ul id = "operate">
+            <li>锁定鲁班</li>
+            <li>锁定盾山</li>
+            <li>释放技能</li>
+            <li>鲁班逃跑</li>
+            <li>盾山逃跑</li>
+        </ul>
+        <div id ="info">
+            <h2>欢迎来到王者荣耀</h2>
+            <ul id = "showInfo"></ul>
+        </div>
+
+    </div>
+</body>
+<script>
+// 观察者模式
+
+// 回调
+// class Yase{
+//     constructor(){
+//         this.name = "亚瑟";
+//     }
+//     release(cb){
+//         console.log("释放技能");
+//         cb && cb();
+//     }
+// }
+// class Luban{
+//     constructor(){
+//         this.name = "鲁班";
+//         this.lp = 100;
+//     }
+//     hurt(){
+//         this.lp -= 10;
+//     }
+// }
+// class Dunshan{
+//     constructor(){
+//         this.name = "盾山";
+//         this.lp = 100;
+//     }
+//     hurt(){
+//         this.lp -= 10;
+//     }
+// }
+
+// let yase = new Yase();
+// let luban = new Luban();
+// let dunshan = new Dunshan();
+// yase.release(function(){
+//     luban.hurt();
+//     dunshan.hurt();
+//     console.log(luban);
+//     console.log(dunshan);
+// });
+
+// ===华丽分割线===
+
+class MyEvent{
+    static instance = null;
+    constructor(){
+        if(!MyEvent.instance){
+            MyEvent.instance  = this;
+            this.handles = {};
+        }
+        return MyEvent.instance;
+    }
+    addEvent(eventName,fn){
+        // 一对多关系；
+        // {"release":[fn1,fn2...],"event2":[]}
+        if(!(eventName in  this.handles) ){
+            this.handles[eventName] = [];
+        }
+        this.handles[eventName].push(fn);
+    }
+    trigger(eventName){
+        if(eventName in this.handles){
+            console.log(this.handles)
+            console.log("释放技能")
+            this.handles[eventName].forEach(fn=>{
+                fn && fn();
+            })
+        }
+    }
+    removeEvent(eventName,fn){
+        if(eventName in this.handles){
+            this.handles[eventName].forEach((item,key)=>{
+                if(item === fn){
+                    this.handles[eventName].splice(key,1)
+                }
+            })
+        }
+    }
+}
+
+
+
+class Yase{
+    constructor(){
+        this.name = "亚瑟";
+    }
+    release(){
+        console.log("亚瑟释放技能");
+        // cb && cb();
+    }
+}
+class Luban{
+    constructor(){
+        this.name = "鲁班";
+        this.lp = 100;
+    }
+    hurt(){
+        this.lp -= 10;
+        console.log("鲁班掉了10点血");
+    }
+}
+class Dunshan{
+    constructor(){
+        this.name = "盾山";
+        this.lp = 100;
+    }
+    hurt(){
+        this.lp -= 10;
+        console.log("盾山掉了10点血");
+    }
+}
+
+let yase = new Yase();
+let luban = new Luban();
+let dunshan = new Dunshan();
+let myevent = new MyEvent();
+
+
+let lubanHurt = luban.hurt.bind(luban)
+let dunshanHurt = dunshan.hurt.bind(dunshan)
+
+// 订阅；
+// myevent.addEvent("hurt",lubanHurt);
+// myevent.addEvent("hurt",dunshanHurt);
+// yase.release(function(){
+//     luban.hurt();
+//     dunshan.hurt();
+//     console.log(luban);
+//     console.log(dunshan);
+// });
+
+// 发布；
+// 单击执行触发
+// let timeout = null
+// document.onclick = function(){
+//     clearTimeout(timeout)
+//     timeout = setTimeout(()=>{
+//         yase.release();
+//         myevent.trigger("hurt");
+//         console.log(luban,dunshan);
+//     },200)
+// }
+
+
+ //作业： 移除自定事件；实现removeEvent("事件名称",fn)方法 。移除一个方法 不是所有；
+
+
+//  myevent.addEvent("hurt",luban.hurt.bind(luban));
+// myevent.addEvent("hurt",dunshan.hurt.bind(dunshan));
+
+// myevent.removeEvent("hurt",luban.hurt.bind(luban))
+// myevent.trigger("hurt")
+
+// 移除自定义事件
+// 双击移除自定义事件
+// document.ondblclick = function(){
+//     clearTimeout(timeout)
+//     myevent.removeEvent("hurt",lubanHurt)
+    
+// }
+
+let data = [
+    {
+        id:1,
+        name:"亚瑟锁定鲁班",
+        subscribe:true,
+        release:false,
+        fn:lubanHurt
+    },
+    {
+        id:2,
+        name:"亚瑟锁定盾山",
+        subscribe:true,
+        release:false,
+        fn:dunshanHurt
+    },
+    {
+        id:3,
+        name:"亚瑟释放技能",
+        subscribe:false,
+        release:true,
+        fn:yase.release
+    },
+    {
+        id:4,
+        name:"鲁班逃跑",
+        subscribe:false,
+        release:false,
+        fn:lubanHurt
+    },
+    {
+        id:5,
+        name:"盾山逃跑",
+        subscribe:false,
+        release:false,
+        fn:dunshanHurt
+    },
+
+]
+
+function render(data){
+    document.querySelector("#operate").innerHTML = ""
+    data.forEach((item,key)=>{
+        // 功能按钮
+        let li = document.createElement("li")
+        
+        li.dataset.id = key
+        li.innerHTML = `
+            ${item.name}
+        `
+        li.onclick = function(){
+            console.log(item)
+            let str = ""
+            if(item.subscribe){
+                myevent.addEvent("hurt",item.fn)                 
+            }else{
+                myevent.removeEvent("hurt",item.fn)
+            }
+            
+            str = `${item.name}`
+            if(item.release){
+                myevent.trigger("hurt")
+                str += ` -
+                    鲁班的血量：<span style> ${luban.lp}</span>
+                    盾山的血量：${dunshan.lp}
+                `
+                // 血量判断
+                if(luban.lp <= 0){
+                    myevent.removeEvent("hurt",lubanHurt)
+                }
+            }
+            // 展示
+            let showEle = document.createElement("li")
+            showEle.innerHTML = str
+            document.querySelector("#showInfo").appendChild(showEle)
+            console.log(luban,dunshan)
+        }
+        document.querySelector("#operate").appendChild(li)
+
+        
+    })
+}
+
+render(data)
+
+// document.querySelector("#operate").addEventListener("click",function(e){
+//     if(e.target.tagName === "LI"){
+//         let id = e.target.dataset.id
+//         console.log(id)
+//         switch(id){
+
+//         }
+//     }
+// })
+
+
+
+</script>
+</html>

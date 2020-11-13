@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+
+<script>
+    function fn(){
+        let args = arguments
+        // 想在这里声明一下变量
+        let  speed , easing ;
+        if(typeof args[0] === "object"){
+            // 当传入的是一个对象
+            // 但是不能直接这么写 {speed,easing} = args[0]
+            ({speed,easing} = args[0])
+        }else{
+            speed = args[0]
+            easing = args[1]
+        }
+        // 问题是如何在这里取到他们的值，我想到的是把let换成var声明，但是不是不建议使用var声明
+        console.log(speed)
+        console.log(easing)
+    }
+    // 两种调用方式
+    fn({speed:"3000",easing:"ease"})
+    // fn("3000","ease")
+</script>
+</html>

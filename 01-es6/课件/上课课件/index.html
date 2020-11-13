@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // var a;
+    // a = 10;
+// console.log(a);
+// var a = 10;
+// console.log(a);
+// let a = 10;
+// {
+//     let a = 10;
+//     console.log(a);
+// }
+// console.log(a);
+// const NAME = "张三";
+// NAME = "李四";
+// const obj = {
+//     myname:"李四",
+//     age:20
+// }
+// // obj = {};
+// // obj.myname = "王五";
+// // 浅冻结；
+// Object.freeze(obj);
+// obj.myname = "王五";
+// console.log(obj);
+
+// let obj = {
+//     myname:"张安",
+//     age:20,
+    
+// }
+// // obj.myname
+// let {myname:name,age:myage} = obj;
+// console.log(name,myage);
+
+// let arr1  = [1,2,3];
+// let arr2 = [4,5];
+// let arr = [...arr1,...arr2];
+// console.log(arr);
+
+// 不定参
+// function test(...args){
+//     console.log(args);
+//     // 伪数组；
+//     // console.log(arguments)
+//     // let arr =  [...arguments];
+//     // console.log(arr);
+// }
+// test(1,2,3);
+
+// let set = new Set([1,1,2,3]);
+// console.log(set);
+
+// es5
+// let f = function(v){
+//     return v;
+// }
+// ES6箭头语法； this（上一层）；
+// let f = (v)=>v;
+
+// let f = v=>{
+    
+//     return v;
+// }
+
+// let f = ()=>({
+//     myname:"张三",
+//     age:20
+// })
+
+// console.log(f());
+// let myname = "张三";
+// let str = `123${myname}456`;
+// console.log(str);
+
+// let sy =  Symbol("key");
+// // console.log(Symbol("key")===Symbol("key"));
+
+// let obj = {
+//     [sy]:"张三",
+//     age:29,
+//     height:"179cm"
+// }
+// // console.log(obj[sy]);
+// // for(let key in obj){
+// //     console.log(key);
+// // }
+// let keys =  Object.keys(obj);
+// console.log(keys);
+
+// const MYNAME = Symbol();
+// const NAME = Symbol();
+
+// let obj = {
+//     [Symbol("key")]:"张三",
+//     age:20
+// }
+// console.log(Object.getOwnPropertySymbols(obj) );
+// let sy = Object.getOwnPropertySymbols(obj)[0];
+// console.log(typeof sy);
+// console.log(obj[sy]);
+
+
+// let set  = new Set([1,2,2,3]);
+// let map = new Map();
+// map.set("key","value");
+// console.log(map);
+
+
+</script>
+</html>

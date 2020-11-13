@@ -1,0 +1,191 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-10-28 12:02:19
+ * @LastEditTime: 2020-10-28 17:36:11
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /正式开课课件/课件/ES6基础课件/静态文件/百度音乐全选/index.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css" />
+</head>
+
+<body>
+    <section id="wrap">
+        <h2 class="title">百度音乐榜单</h2>
+        <ul id="list"></ul>
+        <footer class="footer">
+            <label><input type="checkbox" id="checkAll" />全选/全不选</label>
+            <a href="javascript:;" id="remove">删除</a>
+            <input type="text" id="newInfo" />
+            <a href="javascript:;" id="add">添加</a>
+        </footer>
+    </section>
+    <script>
+        {
+            let data = [{
+                id: 1,
+                title: "残酷月光 - 费启鸣",
+                checked: false,
+                collect: true
+            },
+            {
+                id: 2,
+                title: "兄弟 - 艾热",
+                checked: true,
+                collect: false
+            },
+            {
+                id: 3,
+                title: "毕生 - 夏增祥",
+                checked: true,
+                collect: true
+            },
+            {
+                id: 4,
+                title: "公子向北去 - 李春花",
+                checked: false,
+                collect: false
+            },
+            {
+                id: 5,
+                title: "战场 - 沙漠五子",
+                checked: true,
+                collect: false //是否收藏 true 收藏 false 没有收藏
+            }
+            ];
+
+            // 渲染页面函数
+            let render = () => {
+                let list = document.querySelector("#list");
+                list.innerHTML = ""
+                data.map(item => {
+                    console.log(item);
+                    let li = document.createElement("li");
+                    li.innerHTML = `
+                        <input type="checkbox" class="check" ${
+                                item.checked ? "checked" : ""
+                                } />
+                        <span>${item.title}</span>
+                        ${
+                                item.collect
+                                    ? '<a href="javascript:;" class="cancelCollect">取消收藏</a>'
+                                    : '<a href="javascript:;" class="collect">收藏</a>'
+                                }
+                        <a href="javascript:;" class="remove">删除</a>
+                    `
+                    list.appendChild(li);
+                });
+                document.querySelector("#checkAll").checked = data.every(item => item.checked)
+                addEvent()
+            };
+
+            // 添加事件函数
+            let addEvent = () => {
+                let lis = document.querySelectorAll("li");
+                console.log(lis)
+                lis.forEach((item, key) => {
+                    item.addEventListener("click", e => {
+                        console.log(data);
+                        switch (e.target.className) {
+                            case "check":
+                                data[key].checked = e.target.checked
+                                break;
+                            case "collect":
+                                data[key].collect = true
+                                break;
+                            case "cancelCollect":
+                            data[key].collect = false
+                                break;
+                            case "remove":
+                            console.log(key)
+                                data.splice(key,1)
+                                break;
+                        }
+                        render(data)
+                    });
+                });
+                
+            };
+
+            // 全选
+            let allCheck = document.querySelector("#checkAll")
+            allCheck.addEventListener("click",()=>{
+                data.forEach((item)=>{
+                    return item.checked = allCheck.checked
+                })
+                render(data)
+            })
+
+            // 删除所选
+            let remove = document.querySelector("#remove")
+            remove.addEventListener("click",()=>{
+                if(confirm("确认要删除所选音乐吗？")){
+                    let beforeNum = data.length
+                    data = data.filter((item)=>{
+                        return !item.checked
+                    })
+                    let afterNum = data.length
+                    if(beforeNum === afterNum){
+                        alert("你并没有选择任何音乐！")
+                        return
+                    }
+                    render(data)
+                    allCheck.checked = false
+                }
+            })
+
+            // 添加
+            let newInfo = document.querySelector("#newInfo")
+            let add = document.querySelector("#add")
+
+            // 添加函数
+            let addContent = ()=>{
+                let value = newInfo.value
+                
+                if(value.trim() === ""){
+                    alert("内容不能为空！")
+                    return
+                }
+                // 重名判断
+                if(data.some(item => item.title === value)){
+                    alert("该音乐已在列表中存在！请重新输入")
+                    newInfo.select()
+                    return
+                }
+
+                let idArr = data.map(item => item.id)
+                let idMax = idArr.length > 0 ?idArr.sort()[idArr.length - 1] : 0
+
+                data.push({
+                    id: idMax + 1,
+                    title: value,
+                    checked: false,
+                    collect: false
+                })
+                render(data)
+                newInfo.value = ""
+            }
+            add.addEventListener("click",addContent)
+            newInfo.addEventListener("keydown",(e)=>{
+                if(e.keyCode === 13){
+                    addContent()
+                }
+            })
+
+            let init = () => {
+                render(data)
+            };
+            init();
+        }
+    </script>
+</body>
+
+</html>

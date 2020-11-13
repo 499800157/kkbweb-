@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jquery.js"></script>
+    <style>
+        .box1{
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+        .box2{
+            width: 100px;
+            height: 100px;
+            background: blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="box1"></div>
+    <div class="box2"></div>
+    <button>点击</button>
+</body>
+<script>
+// document.querySelector(".box1").onclick = function(){
+//     console.log(111);
+// }
+//1. 如何实现click？？？
+// $(".box1").click(()=>{
+//     console.log(1111);
+// })
+// $(".box1").on("mousemove mousedown",()=>{
+//     console.log("触发了");
+// })
+
+// 选择器多种情况；
+// 1 id 类名  标签名；
+// $(".box1").click(()=>{
+//     console.log(111);
+// })
+// 2。ready  function
+// $(function(){
+//     console.log("ready");
+// })
+// 3.对象
+// 对象   数组； 
+// $(document.querySelectorAll("div")).click(()=>{
+//     console.log(111);
+// })
+
+// $("div").eq(1).end().click(()=>{
+//     console.log(111);
+// })
+
+// 1.获取样式 只会获取第一个元素；
+//   let res =  $("div").css("background");
+//   console.log(res);
+// 2 设置样式一字符串 多个；
+    // $("div").css("background","yellow");
+// 3.设置样式二 对象；
+// $("div").css({"background":"yellow","width":300})
+
+// $("div").css({"background":"yellow","width":300,"opacity":.5});
+// 实现animate动画,不基于框架库 ；
+$("button").on("click",function(){
+    $("div").animate({width:"300px"});
+})
+
+
+
+</script>
+</html>

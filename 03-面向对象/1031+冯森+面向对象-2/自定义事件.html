@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+// 观察者模式
+
+// 回调
+// class Yase{
+//     constructor(){
+//         this.name = "亚瑟";
+//     }
+//     release(cb){
+//         console.log("释放技能");
+//         cb && cb();
+//     }
+// }
+// class Luban{
+//     constructor(){
+//         this.name = "鲁班";
+//         this.lp = 100;
+//     }
+//     hurt(){
+//         this.lp -= 10;
+//     }
+// }
+// class Dunshan{
+//     constructor(){
+//         this.name = "盾山";
+//         this.lp = 100;
+//     }
+//     hurt(){
+//         this.lp -= 10;
+//     }
+// }
+
+// let yase = new Yase();
+// let luban = new Luban();
+// let dunshan = new Dunshan();
+// yase.release(function(){
+//     luban.hurt();
+//     dunshan.hurt();
+//     console.log(luban);
+//     console.log(dunshan);
+// });
+
+// ===华丽分割线===
+
+class MyEvent{
+    static instance = null;
+    constructor(){
+        if(!MyEvent.instance){
+            MyEvent.instance  = this;
+            this.handles = {};
+        }
+        return MyEvent.instance;
+    }
+    addEvent(eventName,fn){
+        // 一对多关系；
+        // {"release":[fn1,fn2...],"event2":[]}
+        if(!(eventName in  this.handles) ){
+            this.handles[eventName] = [];
+        }
+        this.handles[eventName].push(fn);
+    }
+    trigger(eventName){
+        if(eventName in this.handles){
+            this.handles[eventName].forEach(fn=>{
+                fn && fn();
+            })
+        }
+    }
+    removeEvent(eventName,fn){
+        if(eventName in this.handles){
+            this.handles[eventName].forEach((item,key)=>{
+                if(item === fn){
+                    this.handles[eventName].splice(key,1)
+                }
+            })
+        }
+    }
+}
+
+
+
+class Yase{
+    constructor(){
+        this.name = "亚瑟";
+    }
+    release(){
+        console.log("亚瑟释放技能");
+        // cb && cb();
+    }
+}
+class Luban{
+    constructor(){
+        this.name = "鲁班";
+        this.lp = 100;
+    }
+    hurt(){
+        this.lp -= 10;
+        console.log("鲁班掉了10点血");
+    }
+}
+class Dunshan{
+    constructor(){
+        this.name = "盾山";
+        this.lp = 100;
+    }
+    hurt(){
+        this.lp -= 10;
+        console.log("盾山掉了10点血");
+    }
+}
+
+let yase = new Yase();
+let luban = new Luban();
+let dunshan = new Dunshan();
+let myevent = new MyEvent();
+
+
+
+// yase.release(function(){
+//     luban.hurt();
+//     dunshan.hurt();
+//     console.log(luban);
+//     console.log(dunshan);
+// });
+
+
+
+
+ //作业： 移除自定事件；实现removeEvent("事件名称",fn)方法 。移除一个方法 不是所有；
+
+
+//  myevent.addEvent("hurt",luban.hurt.bind(luban));
+// myevent.addEvent("hurt",dunshan.hurt.bind(dunshan));
+
+// myevent.removeEvent("hurt",luban.hurt.bind(luban))
+// myevent.trigger("hurt")
+
+
+/*
+    功能使用方法：单击执行发布事件，双击移除鲁班的订阅事件，按下回车键移除盾山的订阅事件
+*/
+
+let lubanHurt = luban.hurt.bind(luban)
+let dunshanHurt = dunshan.hurt.bind(dunshan)
+
+// 订阅；
+myevent.addEvent("hurt",lubanHurt);
+myevent.addEvent("hurt",dunshanHurt);
+// 发布；
+// 单击执行触发
+let timeout = null
+document.onclick = function(){
+    clearTimeout(timeout)
+    timeout = setTimeout(()=>{
+        yase.release();
+        myevent.trigger("hurt");
+        console.log(luban,dunshan);
+    },200)
+}
+// 双击移除鲁班的订阅事件
+document.ondblclick = function(){
+    clearTimeout(timeout)
+    myevent.removeEvent("hurt",lubanHurt)
+    console.log("鲁班离开了战场，并说亚瑟你打不到我了！")
+    
+}
+// 回车移除盾山的订阅事件
+document.addEventListener("keydown",(e)=>{
+    if(e.keyCode === 13){
+        myevent.removeEvent("hurt",dunshanHurt)
+        console.log("盾山离开了战场，并说亚瑟你打不到我了！")
+    }
+})
+
+
+
+</script>
+</html>

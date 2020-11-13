@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script src="./a.js"></script> -->
+</head>
+<body>
+    
+</body>
+<script type="module">
+    
+// 严格模式
+// import "./a.js";
+// console.log(a);
+// ES module  ES 模块化； AMD  CMD    ;  ESM  COMMONJS(NODEJS);  导入 导出；
+// console.log(a);
+// 导入；
+// import a,{b,c as d} from './a.js';
+// console.log(a,b,d);
+// 全部导入
+// import * as obj from './a.js';
+// console.log(obj);
+// 按需导入；
+document.onclick =async function(){
+    // console.log(11)
+    // import * as obj from './a.js';
+    // promise对象（异步专题课会说）;
+    // import("./a.js").then(res=>{
+    //     console.log(res);
+    // })
+  let res =   await import("./a.js");
+  console.log(res);
+}
+
+</script>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <img src="#" is="my-img" /> -->
+
+    <!-- my-com -->
+    <my-com></my-com>
+</body>
+<script>
+// 自定义组件
+// 1.继承html自定组件
+// class MyImg extends HTMLImageElement{
+//     constructor(){
+//         super();
+//         console.log("??",this)
+//         setTimeout(()=>{
+//             this.src =  "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1604419354771&di=229152bc8f578d415610f106bd82ad52&imgtype=0&src=http%3A%2F%2Fa0.att.hudong.com%2F30%2F29%2F01300000201438121627296084016.jpg"
+//         },1000)
+//     }
+// }
+
+// customElements.define("my-img",MyImg,{
+//     extends:"img"
+// })
+
+
+// 2.自定义组件
+
+class MyCom extends HTMLElement{
+    constructor(){
+        super();
+        console.log(this);
+        let button = document.createElement("div");
+        button.innerHTML = `<button>点击</button>`
+        // this.innerHTML = ;
+       let _sd =  this.attachShadow({mode:"open"});
+       _sd.appendChild(button);
+    }
+}
+
+customElements.define("my-com",MyCom);
+
+
+
+</script>
+</html>

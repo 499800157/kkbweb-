@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        // // 1.let
+        // {
+        //     let a = 1
+        //     // var a = 1
+        //     console.log(a)
+        // }
+        // //当时let时，报错Uncaught ReferenceError:a is not defined
+        // console.log(a)
+
+
+        // // 2.const
+        // const obj = {
+        //     myname :"zhangsan",
+        //     age:20,
+        //     obj:{
+        //         a:1,
+        //         b:2
+        //     }
+        // }
+        // // 报错 Uncaught TypeError: Assignment to constant variable.
+        // // obj = {}
+
+        // // 这样可以修改，因为其地址值没有修改
+        // obj.myname = "123"
+        // console.log(obj)
+
+        // // Object.freeze会浅冻结对象（只能冻结一层）
+        // Object.freeze(obj)
+        // obj.myname = "333"
+        // console.log(obj)
+
+        // // obj.obj.a 被修改（只能冻结一层）
+        // obj.obj.a = 11
+        // console.log(obj)
+
+        // 3.解构赋值
+        let obj = {
+            myname : "zhangsan",
+            age:20,
+            obj:{
+                a:1,
+                b:2,
+                c:3
+            }
+        }
+        let {myname,age,obj:{a,b}} = obj
+
+    </script>
+</body>
+</html>

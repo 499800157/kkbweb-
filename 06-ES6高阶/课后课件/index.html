@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./myjq.js"></script>
+    <style>
+        .box1{
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+        .box2{
+            width: 100px;
+            height: 100px;
+            background: blue;
+        }
+    </style>
+</head>
+<body>
+    <div class="box1"></div>
+    <div class="box2"></div>
+    <button>点击</button>
+</body>
+<script>
+    // import $ from './myjq.js';
+// document.querySelector(".box1").onclick = function(){
+//     console.log(111);
+// }
+//一. 如何实现click？？？ 1 选择器 2.click方法
+// ()=>{console.log(1111)} --- cb
+// $(".box1").click(()=>{console.log(1111)})
+// $(".box1")
+// obj.click(callback)
+// 二、多个元素处理 (多个元素存起来);
+// $("div").click(()=>{
+//     console.log("点击了");
+// })
+
+// 三 、on方法；
+// $("div").on("mousemove mousedown",()=>{
+//     console.log("触发了");
+// })
+
+// 四、多种情况处理 （选择器多种情况）;
+// 把多种情况区分开 : 分析异同 ，区分不同情况 分别处理；
+// $(".box");
+// $(".box1").click(()=>{
+//     console.log(111);
+// })
+// $(function(){
+//     console.log("ready");
+// })
+
+// $(document.querySelectorAll("div")).click(()=>{
+//     console.log(111);
+// })
+
+// 五、 链式操作   管道操作 | ；  eq、end
+//  // 1.返还this； 2. 返还新的实例化对象； 
+// $("div").eq(0).end().on("click",function(){
+//     console.log(111)
+// }) 
+// promise.then().then().then().then();
+// axios({
+// })
+// axios.get();
+// console.log( $("div").eq(1) );
+// console.log( $("div").eq(0).on("click",function(){
+//     console.log(11122);
+// }));
+// end : 上次操作的节点  ---》  保存上次操作的节点 （eq 保存）；
+// let res =  $("div").eq(0);
+// console.log(res);
+// $("div").eq(1).end().click(()=>{
+//     console.log(111);
+// })
+
+// css方法 1. 参数处理（不定参数）；2.立足未来；
+
+// let res =  $("div").css("background");
+//   console.log(res);
+// $("div").css("background","yellow");
+// wh //不需要单位 ；
+// 外部扩展；
+// $.cssNumber.wh = true;
+// $("div").css({"background":"yellow","width":300,"opacity":.5});
+// 实现animate动画,不基于框架库 
+// $("button").on("click",function(){
+//     $("div").animate({width:"300px"});
+// })
+
+// $("button").on("click",function(){
+//     $("div").animate({width:"300px"},()=>{
+//         console.log("执行完毕");
+//     });
+// })
+// 扩展新的样式；
+$.cssHooks['wh'] = {
+    get(ele){
+        console.log("get...");
+        return ele.offsetWidth + " " + ele.offsetHeight;
+    },
+    set(ele,newValue){
+        console.log("set...");
+        ele.style.width = newValue;
+        ele.style.height = newValue;
+    }
+}
+// let res =  $("div").css("wh");
+// console.log(res);
+$("div").css("wh","200px")
+</script>
+</html>

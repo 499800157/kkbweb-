@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+let obj  = {
+    myname:"张三"
+}
+// console.log(obj);
+// 1.创建对象
+
+// let obj = Object.defineProperty({},"myname",{
+//     configurable:true,
+//     enumerable:true,
+//     get(){
+//         console.log("get...")
+//         return "张三";
+//     },
+//     set(newValue){
+//         console.log("set...",newValue);
+//     }
+// })
+
+// for(let i in obj){
+//     console.log(i);
+// }
+
+// delete obj.myname;
+// console.log(obj);
+// console.log(obj);
+// get 获取值；
+// obj.myname;
+// set 设置；
+// obj.myname = "李四"
+
+// 2.修改对象 观察数据 、拦截数据
+Object.defineProperty(obj,"myname",{
+    configurable:true,
+    enumerable:true,
+    get(){
+        console.log("get...")
+        return "张三";
+    },
+    set(newValue){
+        console.log("set...",newValue);
+    }
+});
+console.log(obj);
+
+
+</script>
+</html>

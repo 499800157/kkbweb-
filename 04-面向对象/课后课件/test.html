@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    class Person extends EventTarget{
+        constructor(){
+            super();
+            this.name = "张安";
+            // this.height = "178cm";
+        }
+        get height(){
+            console.log("获取");
+            return "178cm"
+        }
+        set height(newValue){
+            console.log("set设置..",newValue);
+        }
+    }
+
+    let zhangsan = new Person();
+    // console.log(zhangsan);
+    // zhangsan.height;  //获取
+    // zhangsan.height = "180cm";   //设置
+    function fn1(){
+        console.log("fn1");
+    }
+    zhangsan.addEventListener("foo",fn1);
+    document.onclick  = function(){
+        zhangsan.dispatchEvent(new CustomEvent("foo") )
+    }
+
+
+
+
+
+</script>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            left: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box"></div>
+</body>
+<script>
+    // promise改造
+    function move(ele, target, dis) {
+        return new Promise(resolve => {
+            function fn() {
+                let left = parseInt(window.getComputedStyle(ele, null)[dis]);
+                let speed = 1 * (target - left) / Math.abs((target - left));
+                setTimeout(() => {
+                    left += speed;
+                    if (target === left) {
+                        //  console.log("运动完成");
+                        // cb && cb();
+                        resolve();
+                    } else {
+                        ele.style[dis] = left + "px";
+                        // move(ele, target, dis);
+                        fn();
+                    }
+                })
+            }
+            fn();
+        })
+    }
+    let ele = document.querySelector(".box");
+    // 链式操作；
+    // move(ele, 300, "left").then(()=>{
+    //     console.log("运动完成111!!");
+    //    return move(ele, 300, "top")
+    // }).then(()=>{
+    //     console.log("运动完成222!!");
+    //     return move(ele, 0, "left");
+    // }).then(()=>{
+    //     return move(ele, 0, "top");
+    // }).catch(err=>{
+    //     console.log(err);
+    // })
+
+    // 最优雅 async 及 await 
+
+    // 作业： 通过最优雅的async 及await 改造方块动画；
+
+    async function fn() {
+        try {
+            await move(ele, 300, "left");
+            await move(ele, 300, "top");
+            await move(ele, 0, "left");
+            await move(ele, 0, "top")
+        } catch (e) {
+            console.log(e);
+        }
+    }
+    fn();
+
+
+
+</script>
+
+</html>

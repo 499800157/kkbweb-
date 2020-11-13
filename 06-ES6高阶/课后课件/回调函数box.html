@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            left: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box"></div>
+</body>
+<script>
+    function move(ele, target, dis, cb) {
+        let left = parseInt(window.getComputedStyle(ele, null)[dis]);
+        let speed = 1 * (target - left) / Math.abs((target - left));
+        setTimeout(() => {
+            left += speed;
+            if (target === left) {
+                //  console.log("运动完成");
+                cb && cb();
+            } else {
+                ele.style[dis] = left + "px";
+                move(ele, target, dis, cb);
+            }
+        })
+    }
+    let ele = document.querySelector(".box");
+
+    // move(ele,300,"left");
+    // move(ele,300,"top");
+    // 回调地狱；
+    move(ele, 300, "left", () => {
+        move(ele, 300, "top", () => {
+            move(ele, 0, "left", () => {
+                // console.log("运动完成");
+                move(ele, 0, "top",()=>{
+                    console.log("运动完成");
+                })
+            })
+        })
+    })
+
+    // 1.一对多的关系；2.延迟执行；3.解耦；
+
+
+</script>
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" >
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // 一、2参数,三种状态 二、then：2个参数及三种返还值；
+    // resolve reject
+    // 三种状态  ： pending、 fulfilled（成功）、 rejected （失败）
+    // let p1 = new Promise((resolve,reject)=>{
+    //     resolve("success");
+    //     // reject("err");
+    // })
+    // console.log(p1);
+    // 每个promise对象  then （2个参数  onResolved、onRejected）;
+    // p1.then((res)=>{
+    //     console.log("成功",res);
+    // }).catch(err=>{
+    //     console.log(err);
+    // })
+    // 三种返还值1.不返还；2.普通值；3.promise对象；都会返还一个promise对象；--》链式调用 ；
+
+//    let res =  p1.then(()=>{
+//         // return 111;
+//         return new Promise(resolve=>{
+//             resolve("success11");
+//         })
+//     })
+//     res.then(res=>{
+//         console.log(res)
+//     })
+    // console.log(res);
+
+    // let p  = new Promise(resolve=>{
+    //     resolve("success");
+    // })
+    // let p = Promise.resolve("success");
+    // console.log(p);
+    // let p = Promise.reject("err");
+    // console.log(p);
+        // 所有promise 都执行成功；
+        // let p1 = new Promise(resolve=>{
+        //     setTimeout(()=>{
+        //         console.log("slow");
+        //         resolve(111);
+        //     },1000)
+        // })
+        // let p2 = new Promise((resolve,reject)=>{
+        //     setTimeout(()=>{
+        //         // resolve(222);
+        //         reject("err");
+        //     },500)
+        // })
+        
+        // Promise.all([p1,p2]).then(res=>{
+        //     console.log(res);
+        // })
+        // 先拿到执行快的结果；
+        // Promise.race([p1,p2]).then(res=>{
+        //     console.log(res);
+        // }).catch(err=>{
+        //     console.log(err);
+        // })
+
+        let p = new Promise((resolve,reject)=>{
+            // resolve("success");
+            reject("err")
+        })
+        console.log(p);
+        p.then(res=>{
+            console.log(res);
+        },err=>{
+            console.log(err)
+        }).finally(()=>{
+            console.log("执行完了");
+        })
+
+       
+
+
+
+</script>
+</html>

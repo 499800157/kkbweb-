@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let arr = [
+            {
+                公司名称:"测试",
+                商家编号:"测试",
+                店铺名称:"测试",
+            },
+            {
+                公司名称:"测试",
+                商家编号:"测试",
+                店铺名称:"测试",
+            },
+        ]
+        
+        let newArr = [
+            {
+                companyName:"测试",
+                mallPlatformId:"测试",
+                mallPlatformName:"测试", 
+            },
+            {
+                companyName:"测试",
+                mallPlatformId:"测试",
+                mallPlatformName:"测试", 
+            },
+        ]
+        // 将arr的格式改为newArr的 公司名称 =>companyName
+        arr = arr.map((item,key) =>{
+            // for(let i in newArr[key]){
+            //     console.log(key)
+            //     item[i] = item[key]
+            // }
+            // return item
+            return {
+                companyName:item.公司名称,
+                mallPlatformId:item.商家编号,
+                mallPlatformName:item.店铺名称,
+            }
+        })
+        console.log(arr)
+
+
+    </script>
+</body>
+</html>

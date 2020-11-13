@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // 定义一个generator函数，*号相当于async，yeild相当于await（但还是有区别，后边跟的返回值返回promise才并执行了resolve或者reject也不会默认执行next方法）
+    // 需要通过调用fn.next()，执行下一次
+    // function *fn(){
+    //     yield 1
+    //     yield 2
+    //     yield 3
+    // }
+    // let f = fn()
+    // console.log(f.next())
+    // console.log(f.next())
+    // console.log(f.next())
+    // console.log(f.next())
+    // console.log(f.next())
+    // 可以迭代
+    // for(let i of f){
+    //     console.log(i)
+    // }
+
+
+
+    function * fn(){
+        yield new Promise((resolve)=>{
+            setTimeout(()=>{
+                resolve(1)
+                // console.log(1)
+            },3000)
+        })
+        yield new Promise((resolve)=>{
+            setTimeout(()=>{
+                resolve(2)
+                // console.log(2)
+            },2000)
+        })
+        yield new Promise((resolve)=>{
+            setTimeout(()=>{
+                resolve(3)
+                // console.log(3)
+            },1000)
+        })
+    }
+    // let a  = fn()
+    // console.log(a)
+    // console.log(a.next())
+
+    // 这个函数实现是传入一个 generator函数，并执行他的next方法，因为需要递归调用next,写入一个函数里，通过出口来判断停止条件，通过传入的函数的参数为promise对象，来控制异步回调
+    function co(fn){
+        let a  = fn()
+        next()
+        function next(data){
+            let result = a.next()
+            if(!result.done){
+                result.value.then((info)=>{
+                    console.log(info,data);
+                    next(info)
+                })
+            }
+        }
+    }
+    co(fn)
+
+</script>
+</html>

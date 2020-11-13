@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type = "module">
+        class Person{
+            constructor(name){
+                // 公有属性
+                this.name = name
+                this.age = 20
+                this.fn = function(){
+                    // 不能获取私有属性
+                    // console.log(#weight)
+                }
+            }
+            // 私有属性
+            #weight = "80kg"
+            // 公有方法
+            getName(){
+                console.log(this.#weight)
+                return this.#weight
+            }
+            // 静态属性
+            static num = 10
+            // 静态方法
+            static getNum = function(){
+                console.log(this.num)
+                return this.num
+            }
+        }
+
+        let p1 = new Person("p1")
+        console.log(p1)
+        // 私有属性拿不到（不能直接获取）
+        // console.log(p1.#weight)
+
+        // 静态属性只能在类自己身上使用
+        // console.log(p1.num)
+        console.log(Person.num)
+        console.log(Person.getNum())
+
+        // 通过公有方法获取私有属性
+        console.log(p1.getName())
+
+    </script>
+</body>
+</html>

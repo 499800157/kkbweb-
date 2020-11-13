@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+// proxy(正向代理)
+// Proxy  ;
+let zhagnsan = {
+    sellHouse(num){
+        console.log("卖了"+ num + "元");
+    }
+}
+
+let proxySeller = {
+    sellHouse(hasSold,num){
+        if(hasSold){
+            // 卖了
+            zhagnsan.sellHouse(num-10);
+        }else{
+            // 没卖
+            zhagnsan.sellHouse(num);
+        }
+    }
+}
+// zhagnsan.sellHouse(100);
+
+proxySeller.sellHouse(false,100);
+
+
+</script>
+</html>

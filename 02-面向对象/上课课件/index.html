@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>111</h1>
+</body>
+<script>
+    // 思维方式；js多范式； 1.面向过程 2.面向对象 
+    // 类   对象  实例化 继承 
+    // ES5
+    // 构造函数模拟类概念
+    // function Person(){
+    //     this.name = "张三";
+    //     this.age = 30;
+    //     this.fn = function(){
+    //         console.log("fn...");
+    //     }
+    // }
+    // Person.prototype.hobby =  function(){
+    //     console.log("篮球");
+    // }
+
+    // let zhangsan = new Person();
+
+    // ES6-->语法糖；(语义化)
+
+    // class Person{
+    //     constructor(){
+    //         this.name = "张三";
+    //         this.age = 30;
+    //         this.fn = function(){
+    //             console.log("fn...");
+    //         }
+    //     }
+    //     hobby(){
+    //         console.log("篮球");
+    //     }
+    // }
+    // // Person.prototype.myname = "李四";
+    // let zhangsan = new Person();
+    // console.log(zhangsan);
+    // console.log(typeof Person);
+
+    // 静态属性es5
+    // function Person(){
+    //     this.name = "张三";
+    //     this.age = 30;
+    //     this.fn = function(){
+    //         console.log("fn...");
+    //     }
+    // }
+    // // 静态属性；static
+    // Person.num = 10;
+
+    // class Person{
+    //     // num = 10;
+    //     constructor(){
+    //         this.num = 10;
+    //         this.name = "张三";
+    //         this.age = 30;
+    //         this.fn = function(){
+    //             console.log("fn...");
+    //         }
+    //     }
+    //     hobby(){
+    //         console.log("篮球");
+    //     }
+    // }
+    // console.log(new Person());
+    // console.log(Person.num);
+
+    // 公有 私有成员；
+    // function Person(){
+    //     let _weight = "80kg";
+    //     this.name = "张三";
+    //     this.age = 30;
+    //     this.fn = function(){
+    //         console.log("fn...");
+    //     }
+    // }
+
+    // 私有属性；ES2020;
+    // class Person {
+    //     #weight = "80kg"
+    //     constructor() {
+    //         this.num = 10;
+    //         this.name = "张三";
+    //         this.age = 30;
+    //         this.fn = function () {
+    //             console.log("fn...");
+    //         }
+    //     }
+    //     getWeight() {  //公有方法调取私有属性；
+    //         return this.#weight;
+    //     }
+    //     hobby() {
+    //         console.log("篮球");
+    //     }
+    // }
+
+    // let zhangsan = new Person();
+    // console.log(zhangsan.getWeight());
+    // console.log(zhangsan.#weight); //不能调用
+
+    // 继承；ES5  原型继承？
+    // function Dad(height) {
+    //     this.name = "张三";
+    //     this.age = 20;
+    //     this.height = height;
+    // }
+
+    // function Son(height) {
+    //     Dad.call(this, height);
+    // }
+    // let zhangsan = new Son("178cm");
+
+    // console.log(zhangsan);
+
+
+    // 继承 ES6   可以继承静态成员；
+
+    // class Dad {
+    //     static  num = 10;
+    //     constructor(height) {
+    //         this.name = "张三";
+    //         this.age = 20;
+    //         this.height = height;
+    //     }
+    // }
+
+    // class Son extends Dad{
+    //     constructor(height) {
+    //         super(height);  //一定要在this之前调用；
+    //         this.weight = "80kg";
+    //     }
+    // }
+    // console.log(Son.num);
+    // let zhangsan = new Son("178cm");
+    // console.log(zhangsan);
+
+    // 合并空运算符；
+    // function test(name,age){
+    //     name = name ?? "默认名称";
+    //     age = age ?? 20;
+    //     console.log(name,age)
+    // }
+
+    // test("",30);
+
+    // 可选链式操作；
+    // let obj  ={
+    //     myname:{
+    //         age:20
+    //     }
+    // };
+    // console.log(obj?.myname?.age);
+
+    // ESM  ES MODULE
+
+</script>
+
+</html>

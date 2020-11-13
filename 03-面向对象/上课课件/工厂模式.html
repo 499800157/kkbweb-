@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    // 产品生产 和 产品使用 分开；
+    class Yase {
+        constructor() {
+            this.name = "亚瑟";
+        }
+        release() {
+            console.log("释放技能")
+        }
+        hurt() {
+            console.log("造成伤害");
+        }
+    }
+
+    class Luban {
+        constructor() {
+            this.name = "luban";
+        }
+        release() {
+            console.log("释放技能")
+        }
+        hurt() {
+            console.log("造成伤害");
+        }
+    }
+
+    // 工厂模式； 缺点增加复杂程度；
+    function createHeroFactory(type) {
+        let hero;
+        if (type === "luban") {
+            hero = new Luban();
+        } else if (type === "yase") {
+            hero = new Yase();
+        }
+        return hero;
+    }
+
+
+    function heroStore(type) {
+        let hero = createHeroFactory(type);
+        hero.release();
+        hero.hurt();
+    }
+
+    heroStore("luban");
+    heroStore("yase");
+
+
+
+
+    //工厂模式
+
+    // function Factory(){
+    //     let o = {};
+    //     o.name =  "张三";
+    //     o.fn = function(){
+    //         console.log("fn");
+    //     }
+    //     return o;
+    // }
+
+
+</script>
+
+</html>

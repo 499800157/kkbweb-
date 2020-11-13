@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+class Yase {
+    constructor(){
+        this.name = "亚瑟";
+    }
+    release(){
+        console.log("释放了技能");
+        // console.log("造成100点伤害");
+    }
+}
+// 继承  extends ：扩展  ---》纵向；
+// 装饰： 造成伤害； 横向；
+
+Function.prototype.Decorator = function(fn,num){
+    // console.log(this);
+    this();
+    fn(num);
+}
+
+function hurt(num){
+    console.log("造成"+num+"伤害");
+}
+
+let yase = new Yase();
+// yase.release();
+yase.release.Decorator(hurt,10);
+
+
+
+</script>
+</html>

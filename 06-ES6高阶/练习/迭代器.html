@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // for of循环，只能遍历迭代器
+    let obj = {
+        a:1,
+        b:2,
+        c:3
+    }
+
+    // 1.Uncaught TypeError: obj is not iterable
+    // for(let i of obj){
+    // }
+
+    // // 2.那如何让obj也能使用for of迭代器呢
+    // obj[Symbol.iterator] = function(){
+
+    // }
+    // // Result of the Symbol.iterator method is not an object 结果符号.迭代器方法不是对象
+    // for(let i of obj){
+    // }
+
+
+    // // 3.返回的对象里边需要有个方法（ undefined is not a function ）
+    // obj[Symbol.iterator] = function(){
+    //     return {}   
+    // }
+    // // Uncaught TypeError: undefined is not a function 
+    // for(let i of obj){
+    // }
+
+    //4.迭代器的结果不是一个对象
+    // obj[Symbol.iterator] = function(){
+    //     return {
+    //         next(){
+
+    //         }
+    //     }   
+    // }
+    // // Iterator result undefined is not an object
+    // for(let i of obj){
+    // }
+
+    //  //5.陷入死循环 但是没有报错
+    //  obj[Symbol.iterator] = function(){
+    //     return {
+    //         next(){
+    //             return {}
+    //         }
+    //     }   
+    // }
+    // // 
+    // for(let i of obj){
+    // }
+
+     //6.没有报错说明大致是这个框架，需要在返回的内容中做处理
+    /*
+        done表示迭代器是否完成，value是遍历的返回值
+        返回的对象结果
+        {
+            done:true/false,
+            value:val
+        }
+        所以需要处理的就是value的值，和done什么时候结束
+    */  
+     obj[Symbol.iterator] = function(){
+        let keys = Object.keys(obj)
+        let index = 0
+        return {
+            next(){
+                if(index < keys.length){
+                    return {
+                        done:false,
+                        value:{
+                            key:keys[index],
+                            value:obj[keys[index++]]
+                        }
+                    }
+                }else{
+                    return {
+                        done:true
+                    }
+                }
+            }
+        }
+    }
+    let a = obj[Symbol.iterator]()
+    console.log(a) //一个包含next方法的对象
+    console.log(a.next())
+    console.log(a.next())
+    console.log(a.next())
+    console.log(a.next()) //最后一次是done:true
+
+    // // 有返回值
+    // for(let i of obj){
+    //     console.log(i)
+    // }
+
+</script>
+
+</html>

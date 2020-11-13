@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script> 
+    // 传入一个函数，该函数有两个参数， resolve reject，
+    // 若不传函数，会报错 Promise resolver undefined is not a function
+    // 三个状态 pending fulfilled rejected
+    let p1 = new Promise((resolve,reject)=>{
+        // resolve(1)
+    })
+
+    console.log(p1)
+
+    // then有两个参数 都是函数，第一个是onResolved的回调函数,第二个是onRejected的回调函数
+    // 有三种返回值 不过都是promise对象
+    // -- 第一种不返还，promise改为resolve状态，PromiseValue 为undefined
+    // -- 第二种返回普通值 ,promise改为resolve状态，PromiseValue 为该普通值
+    // -- 第三种返回promise,promise的状态和值取决于返回值的promise状态和值
+    let res = p1.then((res)=>{ 
+        // console.log(res)
+        // return 123;
+        return new Promise(()=>{
+
+        })
+    },function(err){
+        // console.log(err)
+    })
+    console.log(res)
+
+    // 可以通过catch统一捕捉错误处理
+    // p1.then(()=>{
+
+    // }).then(()=>{
+
+    // }).catch((err)=>{
+    //     console.log(err)
+    // })
+
+    //写法错误，resolve是Promise上的静态方法
+    // let p2 = new Promise(()=>{}).resolve()
+    // (intermediate value).resolve is not a function
+    // console.log(p2)
+
+    // 相当于一个let p1 = new Promise((resolve,reject)=>{resolve(1)})
+    // 简写了上边的方法，函数参数内部仅调用了resolve(1);Promise.reject()同理
+
+    let p2 = Promise.resolve(1)
+    console.log(p2)
+    let p3 = p2.then()
+    console.log(p3)
+
+    console.log("*********************************")
+    // Promise.all()
+    let pp1 = new Promise((resolve,reject)=>{
+        resolve(1)
+        // reject(10)
+    })
+    let pp2 = new Promise((resolve,reject)=>{
+        resolve(2)
+        // reject(2)
+    })
+    // 返回的是一个promise对象，只有都resolve之后 state才能成为fulfilled,只要调用了一个reject则状态改为rejected,不调用返回pending
+    // 返回的value值是resolve返回结果合成一个数组，pending时候是undefined ，rejected时报错
+    let pp3 = Promise.all([pp1,pp2])
+    console.log(pp3)
+    pp3.then((res)=>{
+        console.log(res)
+    })
+
+    // 先拿到执行快的结果；pp1,pp2都会执行，pp4就哪个先返回就返回哪个
+    let pp4 = Promise.race([pp1,pp2])
+    console.log(pp4)
+    // 这里就相当于快的那个的promise调用then方法
+    pp4.then((res)=>{
+        console.log(res)
+    })
+
+    // finally 全部执行完成,最后调用
+    pp4.then((res)=>{
+        console.log(res)
+    }).catch((err)=>{
+        console.log(err)
+    }).finally((res)=>{
+        console.log(res) //undefined
+        console.log("全部执行完成")
+    })
+
+
+</script>
+</html>

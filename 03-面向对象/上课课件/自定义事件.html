@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+// 观察者模式
+
+// 回调
+// class Yase{
+//     constructor(){
+//         this.name = "亚瑟";
+//     }
+//     release(cb){
+//         console.log("释放技能");
+//         cb && cb();
+//     }
+// }
+// class Luban{
+//     constructor(){
+//         this.name = "鲁班";
+//         this.lp = 100;
+//     }
+//     hurt(){
+//         this.lp -= 10;
+//     }
+// }
+// class Dunshan{
+//     constructor(){
+//         this.name = "盾山";
+//         this.lp = 100;
+//     }
+//     hurt(){
+//         this.lp -= 10;
+//     }
+// }
+
+// let yase = new Yase();
+// let luban = new Luban();
+// let dunshan = new Dunshan();
+// yase.release(function(){
+//     luban.hurt();
+//     dunshan.hurt();
+//     console.log(luban);
+//     console.log(dunshan);
+// });
+
+// ===华丽分割线===
+
+class MyEvent{
+    constructor(){
+        this.handles = {};
+    }
+    addEvent(eventName,fn){
+        // 一对多关系；
+        // {"release":[fn1,fn2...],"event2":[]}
+        if(!(eventName in  this.handles) ){
+            this.handles[eventName] = [];
+        }
+        this.handles[eventName].push(fn);
+    }
+    trigger(eventName){
+        this.handles[eventName].forEach(fn=>{
+            fn();
+        })
+    }
+   
+}
+
+
+
+class Yase{
+    constructor(){
+        this.name = "亚瑟";
+    }
+    release(){
+        console.log("释放技能");
+        // cb && cb();
+    }
+}
+class Luban{
+    constructor(){
+        this.name = "鲁班";
+        this.lp = 100;
+    }
+    hurt(){
+        this.lp -= 10;
+    }
+}
+class Dunshan{
+    constructor(){
+        this.name = "盾山";
+        this.lp = 100;
+    }
+    hurt(){
+        this.lp -= 10;
+    }
+}
+
+let yase = new Yase();
+let luban = new Luban();
+let dunshan = new Dunshan();
+let myevnet = new MyEvent();
+// 订阅；
+myevnet.addEvent("hurt",luban.hurt.bind(luban));
+myevnet.addEvent("hurt",dunshan.hurt.bind(dunshan));
+// yase.release(function(){
+//     luban.hurt();
+//     dunshan.hurt();
+//     console.log(luban);
+//     console.log(dunshan);
+// });
+
+// 发布；
+document.onclick = function(){
+    yase.release();
+    myevnet.trigger("hurt");
+    console.log(luban,dunshan);
+}
+
+
+ //作业： 移除自定事件；实现removeEvent("事件名称",fn)方法 。移除一个方法 不是所有；
+
+
+//  myevnet.addEvent("hurt",luban.hurt.bind(luban));
+// myevnet.addEvent("hurt",dunshan.hurt.bind(dunshan));
+
+// myevnet.removeEvent("hurt",luban.hurt.bind(luban))
+// myevnet.trigger("hurt")
+
+</script>
+</html>
