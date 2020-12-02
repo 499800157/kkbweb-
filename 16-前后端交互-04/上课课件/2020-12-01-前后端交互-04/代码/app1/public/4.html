@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <ul id="list"></ul>
+    
+
+    <script>
+        let listElement = document.querySelector('#list');
+
+        let n = 0;
+
+        getData();
+        
+        function getData() {
+            let xhr = new XMLHttpRequest();
+
+            xhr.onload = function() {
+                let users = JSON.parse(xhr.responseText);
+
+                listElement.innerHTML = '';
+                n = users.length;
+                users.forEach( user => {
+                    let li = document.createElement('li');
+                    li.innerHTML = user.username;
+                    listElement.appendChild(li);
+                } );
+                
+                setTimeout(getData, 1000);
+            }
+
+            xhr.open('get', '/data?n=' + n, true);
+            xhr.send();
+        }
+    </script>
+</body>
+</html>

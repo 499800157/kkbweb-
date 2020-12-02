@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script src="/public/js/axios.min.js"></script>
+    <script>
+
+        (async function() {
+
+            axios.defaults.baseURL = '/user';
+
+            axios.interceptors.request.use(function(config) {
+                config.headers.a = 'kkb';
+                return config;
+            }, function() {
+
+            });
+
+            axios.interceptors.response.use(function(response) {
+                // console.log('response', response);
+
+                if ([400,401].find(response.status)) {
+                    // alert('....');
+                }
+
+                return response;
+            }, function() {
+
+            });
+
+            // axios => Axios.prototype.request
+            // axios.request => Axios.prototype.request
+            // axios.get =>  Axios.prototype.get
+
+            let rs1 = await axios({
+                url: '/profile'
+            });
+
+            console.log('rs1', rs1.data);
+
+            let rs2 = await axios({
+                url: '/address'
+            });
+
+            console.log('rs2', rs2.data);
+
+
+            /**
+             * Koa - middleware
+             *  中间件
+             *      框架的中间层部分注入的外部动作
+             * 
+             * 
+             * axios - Interceptors
+             *  拦截器
+             *      框架axios请求之前和响应之后层部分注入的外部动作
+             * 
+             *  chain = [dispatchRequest, undefined]
+             * 
+             *      dispatchRequest => axios 库根据不同的适配器封装的基于Promise请求方法
+             * 
+             * 
+              axios.interceptors.request.use(rs1, rf1);
+              axios.interceptors.request.use(rs2, rf2);
+
+              axios.interceptors.response.use(ps1, pf1);
+              axios.interceptors.response.use(ps2, pf2);
+
+this.interceptors.request.forEach(function unshiftRequestInterceptors(interceptor) {
+    chain.unshift(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  chain = [rs2, rf2, rs1, rf1, dispatchRequest, undefined]
+
+
+  this.interceptors.response.forEach(function pushResponseInterceptors(interceptor) {
+    chain.push(interceptor.fulfilled, interceptor.rejected);
+  });
+
+  chain = [rs2, rf2, rs1, rf1, dispatchRequest, undefined, ps1, pf1, ps2, pf2]
+
+  promise.then(rs2, rf2).then(rs1, rf1).then(dispatchRequest, undefined).then(ps1, pf1).then(ps2, pf2)
+             */
+
+
+            let cartsAxios = axios.create({
+                baseURL: '/carts'
+            });
+            let rs3 = await cartsAxios({
+                url: '/goods'
+            });
+
+            console.log('rs3', rs3.data);
+        })()
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <ul id="list"></ul>
+    
+
+    <script>
+        let listElement = document.querySelector('#list');
+        
+        /**
+         * 通过 EventSource 发送的请求，请求头中会包含
+         *  Accept: text/event-stream
+         * 表示，服务器的响应头content-type必须是text/event-stream
+         */
+        let source = new EventSource("/data");
+
+        source.onmessage = function() {
+            console.log('....');
+        }
+
+        function render(users) {
+            listElement.innerHTML = '';
+            users.forEach( user => {
+                let li = document.createElement('li');
+                li.innerHTML = user.username;
+                listElement.appendChild(li);
+            } );
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font: 13px Helvetica, Arial;
+            background-color: #eee;
+        }
+
+        form {
+            background: #000;
+            padding: 3px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        form input {
+            border: 0;
+            padding: 10px;
+            width: 80%;
+            margin-right: 0.5%;
+        }
+
+        form .button {
+            width: 9%;
+            background: rgb(130, 224, 255);
+            border: none;
+            padding: 10px;
+            display: inline-block;
+        }
+
+        #messages {
+            list-style-type: none;
+            margin: 0;
+            padding: 10px 0 0;
+        }
+
+        #messages li {
+            padding: 5px 10px;
+        }
+
+        /* #messages li:nth-child(odd) { background: #eee; } */
+        .myMessage,
+        .elseMessage {
+            overflow: auto;
+            text-align: center;
+        }
+
+        .myMessage>div,
+        .elseMessage>div {
+            margin: 8px 8px;
+            padding: 8px;
+            display: inline-block;
+        }
+
+        .myMessage>div {
+            background-color: rgb(69, 219, 69);
+            float: right;
+        }
+
+        .elseMessage>div {
+            background-color: white;
+            float: left;
+        }
+        .userAdd {
+            text-align: center;
+            color:#333;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="messages">
+
+    </ul>
+    <form action="" >
+        <div class="button">Login</div>
+        <input id="m" autocomplete="off" />
+        <div class="button">Send</div>
+        <input type="text" style="display: none;">
+    </form>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+        let btnElements = document.querySelectorAll('.button');
+        let mElement = document.querySelector('#m');
+        let messagesElement = document.querySelector('#messages');
+        let socket;
+
+        document.forms[0].onsubmit = function (e) {
+            e.preventDefault();
+        }
+        mElement.addEventListener("keydown",(e)=>{
+            if(e.keyCode === 13){
+                btnElements[1].onclick()
+            }
+        })
+        btnElements[0].onclick = function (e) {
+            e.preventDefault();
+            if(socket){
+                alert("您已经登录过了，刷新页面会退出！")
+                return;
+            }
+            socket = io();
+            socket.on('connect', () => {
+                btnElements[0].innerHTML = socket.id;
+                socket.emit('login', {
+                    id: socket.id
+                });
+                socket.on("userAdd",(data) => {
+                    let user = document.createElement("div")
+                    user.classList.add("userAdd")
+                    user.innerHTML = `
+                        <p>用户 ${data.id} 加入群聊</p>  
+                    `
+                    messagesElement.appendChild(user)
+                })
+            });
+
+            socket.on('chat', data => {
+                let li = document.createElement('li');
+                let userClassName = data.id === socket.id ? "myMessage" : "elseMessage"
+                li.classList.add(userClassName)
+                li.innerHTML = `
+                    <div>
+                        <strong>${data.id}:</strong>
+                        <span>${data.message}</span>
+                        <p>${data.date}</p>    
+                    </div>
+                `;
+
+                messagesElement.appendChild(li);
+            });
+        }
+
+
+        btnElements[1].onclick = function () {
+            if (socket) {
+                if (mElement.value != '') {
+                    socket.emit('message', {
+                        message: mElement.value
+                    });
+                    mElement.value = '';
+                }else{
+                    alert("消息不能为空！")
+                }
+            }else{
+                alert("需要登录才可以发送消息！")
+            }
+
+        }
+    </script>
+</body>
+
+</html>
