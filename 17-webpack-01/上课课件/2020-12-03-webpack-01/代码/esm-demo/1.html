@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <!-- 整个程序的入口文件，至于该文件以后后续文件的依赖就由文件本身去解决 -->
+    <!-- 
+        type="module" 以模块的方式去引入文件，浏览器会在这种模式下有一些特殊的处理方式
+
+        1. 可以通过import 和 export 语法来解决模块之间的相互引用问题
+        2. 被加载的文件会自动拥有一个独立的作用域（模块作用域）
+
+
+        如果代码运行在 type="module" 下，需要注意
+            1、代码是严格模式的
+     -->
+    <script type="module" src="./js/1.js"></script>
+    
+</body>
+</html>

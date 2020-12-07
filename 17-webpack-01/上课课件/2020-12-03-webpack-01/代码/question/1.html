@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <!-- 
+
+        问题1：
+            通过普通的script标签引入的方式来加载不同的js文件
+            要注意加载的文件顺序问题！- 依赖问题
+            依靠人工的方式去解决文件依赖问题是特别的麻烦，而且也很容易出错！
+        问题2：
+            通过普通的script标签引入的方式来加载不同的js文件
+            作用域问题（虽然文件独立，但是作用域是没有独立的） - 数据污染问题！
+     -->
+    <script src="./js/2.js"></script>
+    <script src="./js/1.js"></script>
+    
+</body>
+</html>

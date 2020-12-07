@@ -1,0 +1,1 @@
+export default '开课吧!';
