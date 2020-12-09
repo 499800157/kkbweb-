@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <button @click="handleClick">按钮</button>
+      <p><span>count:</span>{{count}}</p>
+      <p><span>double:</span>{{double}}</p>
+    </div>
+    <script>
+      const app = new Vue({
+        el: "#app",
+        data: {
+          msg: "hello world",
+          count:0,
+        },
+        methods:{
+          handleClick(){
+            this.count ++
+          }
+        },
+        computed:{
+          double(){
+            return this.count * 2
+          }
+        },
+      });
+      window.app = app;
+    </script>
+  </body>
+</html>
