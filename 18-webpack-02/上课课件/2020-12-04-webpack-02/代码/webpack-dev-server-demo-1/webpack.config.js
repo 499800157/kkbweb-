@@ -98,6 +98,9 @@ module.exports = {
         hot:true,
         // 即使 HMR 不生效，也不去刷新整个页面(选择开启)
         hotOnly:true,
+        port:8888,
+        open:true,
+        contentBase:"./abc",
     }
 
 }
