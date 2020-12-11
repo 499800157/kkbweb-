@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./vue.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      Vue.component("Foo", {
+        components: {
+        },
+        props: {
+          src: {
+            default: "https://img.kaikeba.com/70350130700202jusm.png",
+            type: String,
+            required: true,
+          },
+          name: {
+            default: "未命名",
+            type: String,
+          },
+          alt: {
+            default: "替代图片的文字",
+            type: String,
+            required: true,
+          },
+        },
+        template:`
+          <div>
+            <img  :src = "src" :alt = "alt" :title = "name"/>
+            <p ><span>图片名称 -- </span>{{name}}</p>
+          </div>
+        `,
+      });
+      
+      const app = new Vue({
+        el: "#app",
+        
+        data: {
+          imgsInfo: [
+            {
+              src:"https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=3387716082,1768697998&fm=26&gp=0.jpg",
+              alt:"坐飞机的图片",
+              name:"坐飞机"
+            },
+            {
+              src:"https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1819216937,2118754409&fm=26&gp=0.jpg",
+              alt:"小狗的图片",
+              name:"小狗"
+            },
+          ],
+        },
+        template: `<ul>
+          <li  v-for = "item in this.imgsInfo">
+            <Foo :src = "item.src" :alt = "item.alt" :name = "item.name"></Foo>
+          </li>
+        </ul>`,
+      });
+      console.log(app)
+    </script>
+  </body>
+</html>
